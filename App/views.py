@@ -39,5 +39,3 @@ def change_and_delete_Books(request, pk):
     elif request.method == 'DELETE':
         books.delete()
         return Response(status = status.HTTP_204_NO_CONTENT)
-
-        
