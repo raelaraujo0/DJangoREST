@@ -51,7 +51,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'api_notes.urls'
+ROOT_URLCONF = 'api_books.urls'
 
 TEMPLATES = [
     {
@@ -69,7 +69,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'api_notes.wsgi.application'
+WSGI_APPLICATION = 'api_books.wsgi.application'
 
 
 # Database
