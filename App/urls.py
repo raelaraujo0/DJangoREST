@@ -1,7 +1,7 @@
 from django.urls import path
-from App.views import books_view, change_and_delete_Books
+from App.views import CreateAndListBooks, ChangeAndDeleteBooks
 
 urlpatterns = [
-    path('', books_view),
-    path('/<int:pk>/', change_and_delete_Books),
+    path('', CreateAndListBooks.as_view()),
+    path('/<int:pk>/', ChangeAndDeleteBooks.as_view()),
 ]
