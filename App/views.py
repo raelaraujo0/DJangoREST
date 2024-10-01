@@ -3,14 +3,34 @@ from App.serializers import BooksSerial
 
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.decorators import api_view
-from rest_framework.views import APIView
 from rest_framework.exceptions import NotFound
+from rest_framework import api_view
 
-class CreateAndListBooks(generics.ListCreateAPIView):
-    queryset = books.objects.all()
-    serializer_class = BooksSerial
+@api_view(['GET'])
+def getBook(request):
+    books = Books.objects.all()
+    serializer = BooksSerial(books, many = true)
+    return Response({'msg':'All the book is here rn!'}, status = status.HTTP_200_OK)
 
-class ChangeAndDeleteBooks(generics.RetrieveUpdateDestroyAPIView):
-    queryset = books.objects.all()
-    serializer_class = BooksSerial
+@api_view(['POST'])
+def postBook(request):
+    serializer = BooksSerial(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({'msg': 'Books created successfully'}, status = status.HTTP_201_CREATED)
+    return Response(serializer.error_messages, status = status.HTTP_400_BAD_REQUEST)
+
+@api_view(['PUT'])
+def putBook(request):
+    books = Books.objects.get(pk = request.data.get('id'))
+    serializer = BooksSerial(books, data = request.data)
+    if serializer.is_valid():
+        serializer.save()
+        return Response({'msg':'Book updated successfully'}, status = status.HTTP_200_OK)
+    return Response(serializer.error_messages, status = status.HTTP_400_BAD_REQUEST)
+
+@api_view(['DELETE'])
+def deleteBook(request):
+    books = Books.objects.get(pk = request.data.get('id'))
+    books.delete()
+    return Response({'msg':'The book has been deleted'}, status = status.HTTP_204_NO_CONTENT)
